@@ -1,5 +1,8 @@
 package wordPlay.driver;
-
+import wordPlay.util.FileProcessor;
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 /**
  * @author John Doe
  *
@@ -12,11 +15,16 @@ public class Driver {
 		 * argument value is not given java takes the default value specified in
 		 * build.xml. To avoid that, below condition is used
 		 */
+
 		if ((args.length != 3) || (args[0].equals("${arg0}")) || (args[1].equals("${arg1}")) || (args[2].equals("${arg2}"))) {
 			System.err.println("Error: Incorrect number of arguments. Program accepts 3 arguments.");
 			System.exit(0);
 		}
-		System.out.println("Hello World! Lets get started with the assignment");
-
+			File inputFile = new File(args[0]);
+			String inputFileName=inputFile.getName();
+			String resultFileName=args[1];
+			String metricsFileName=args[2];
+			FileProcessor fileProcessor=new FileProcessor(inputFileName);
+			fileProcessor.processInputFile();
 	}
 }
