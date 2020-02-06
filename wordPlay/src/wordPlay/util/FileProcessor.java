@@ -1,6 +1,7 @@
 package wordPlay.util;
 import java.util.Scanner;
 import wordPlay.util.Results;
+import wordPlay.util.FileDisplayInterface;
 import java.io.File;
 import java.lang.String;
 import java.io.FileNotFoundException;
@@ -27,17 +28,23 @@ public class FileProcessor {
             return true;
         else return false;
     }
+
     public void processInputFile() {
         try {
+            String reversedSentence;
             Scanner sc = new Scanner(new File(inputFileName));
-            Results reverseSentence=new Results();
+            Results results=new Results();
+            FileDisplayInterface fileDisplayInterface=new Results();
             while (sc.hasNextLine()) {
                 String data = sc.nextLine();
-                if(validation(data))
-                reverseSentence.reverseStringsOfSentence(data);
-                else
+                if (validation(data)) {
+                    reversedSentence = results.reverseStringsOfSentence(data);
+                    fileDisplayInterface.writeDatatoFile("output.txt", reversedSentence);
+                } else
                     System.out.println("ERROR: Input File with Invalid Characters, Only Aa-Zz 0-9 white spaces and periods");
             }
+            results.displayMetrics();
+            //results.writeMetricsToFile();
         }
        catch (FileNotFoundException e){
             System.out.println("in catch, error:"+inputFileName);

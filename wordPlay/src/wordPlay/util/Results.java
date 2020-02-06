@@ -1,26 +1,34 @@
 package wordPlay.util;
 import java.lang.String;
+import wordPlay.util.CalculateMetrics;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileWriter;
 public class Results implements FileDisplayInterface, StdoutDisplayInterface {
+    double avgWordCountPerSentence;
+    double avgCharCountPerSentence;
 
-	void reverseStringsOfSentence(String data){
+    CalculateMetrics calculateMetrics=new CalculateMetrics();
+
+    String reverseStringsOfSentence(String data){
+        calculateMetrics.calculateCharacters(data);
         String[] words=data.split(" ");
-
+        calculateMetrics.addtoArraylist(words.length);
         String[] revWords=new String[words.length];
         String reverseString=new String();
         for(int i=0;i<words.length;i++){
         revWords[i]=reverseWord(words[i]);
         reverseString+=" "+revWords[i];
         }
-
-        calculatemetric(reverseString);
-        writeDatatoFile("output.txt",reverseString);
         System.out.println(reverseString);
+        return reverseString;
     }
 
-   String reverseWord(String data){
+    void displayMetrics(){
+        calculateMetrics.displaytoConsole();
+    }
+
+    String reverseWord(String data){
 	    StringBuilder sb=new StringBuilder();
 	    int period=0;
         for(int i=data.length()-1; i >= 0; i--)
@@ -43,9 +51,8 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
 	        if (resultFile.exists()){
 	            FileWriter fileWriter=new FileWriter(filename,true);
 	            fileWriter.write(Line);
+	            fileWriter.write(System.getProperty("line.separator"));
 	            fileWriter.close();
-	            System.out.println("Success");
-
             }
 	        else{
                 resultFile.createNewFile();
@@ -58,8 +65,6 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
         }
     }
 
-    private void calculatemetric(String Line){
 
-    }
 
 }
