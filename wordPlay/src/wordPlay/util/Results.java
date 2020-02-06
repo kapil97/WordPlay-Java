@@ -7,9 +7,9 @@ import java.io.FileWriter;
 public class Results implements FileDisplayInterface, StdoutDisplayInterface {
     double avgWordCountPerSentence;
     double avgCharCountPerSentence;
-
+    String mostFreqWordUsed;
+    String longestWord;
     CalculateMetrics calculateMetrics=new CalculateMetrics();
-
     String reverseStringsOfSentence(String data){
         calculateMetrics.calculateCharacters(data);
         String[] words=data.split(" ");
@@ -17,15 +17,16 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
         String[] revWords=new String[words.length];
         String reverseString=new String();
         for(int i=0;i<words.length;i++){
-        revWords[i]=reverseWord(words[i]);
-        reverseString+=" "+revWords[i];
+            calculateMetrics.createWordMap(words[i]);
+            revWords[i]=reverseWord(words[i]);
+            reverseString+=" "+revWords[i];
         }
         System.out.println(reverseString);
         return reverseString;
     }
-
     void displayMetrics(){
         calculateMetrics.displaytoConsole();
+        System.out.println("inside results: "+ calculateMetrics.calculateAvgWordCount()+calculateMetrics.calculateAvgCharCount()+calculateMetrics.calcMostFreqWord());
     }
 
     String reverseWord(String data){
