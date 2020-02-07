@@ -24,7 +24,10 @@ public class Driver {
 			String inputFileName=inputFile.getName();
 			String resultFileName=args[1];
 			String metricsFileName=args[2];
-			FileProcessor fileProcessor=new FileProcessor(inputFileName);
+			FileProcessor fileProcessor=new FileProcessor();
+			fileProcessor.setInputFileName(args[0]);
+			fileProcessor.setOutputFileName(args[1]);
+			fileProcessor.setMetricsFileName(args[2]);
 			fileProcessor.processInputFile();
 	}
 }

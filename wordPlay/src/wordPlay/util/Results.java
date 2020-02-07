@@ -3,14 +3,17 @@ import java.lang.String;
 import wordPlay.util.CalculateMetrics;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.io.FileWriter;
 public class Results implements FileDisplayInterface, StdoutDisplayInterface {
     double avgWordCountPerSentence;
     double avgCharCountPerSentence;
     String mostFreqWordUsed;
+    ArrayList<String> resultMetrics=new ArrayList<String>();
     String longestWord;
     CalculateMetrics calculateMetrics=new CalculateMetrics();
-    String reverseStringsOfSentence(String data){
+
+    String sentenceProcessor(String data){
         calculateMetrics.calculateCharacters(data);
         String[] words=data.split(" ");
         calculateMetrics.addtoArraylist(words.length);
@@ -18,15 +21,40 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
         String reverseString=new String();
         for(int i=0;i<words.length;i++){
             calculateMetrics.createWordMap(words[i]);
+            calculateMetrics.longestWord(words[i]);
             revWords[i]=reverseWord(words[i]);
             reverseString+=" "+revWords[i];
         }
         System.out.println(reverseString);
         return reverseString;
     }
+    void getMetrics(){
+        avgCharCountPerSentence=calculateMetrics.calculateAvgCharCount();
+        avgWordCountPerSentence=calculateMetrics.calculateAvgWordCount();
+        mostFreqWordUsed=calculateMetrics.calcMostFreqWord();
+        longestWord=calculateMetrics.getLongestWord();
+    }
+    void stringToWriteinFile(){
+        String addToMetricsList="AVG_NUMBER_WORDS_PER_SENTENCE = "+ avgWordCountPerSentence;
+        resultMetrics.add(addToMetricsList);
+        addToMetricsList="AVG_NUM_CHARS_PER_SENTENCE = "+ avgCharCountPerSentence;
+        resultMetrics.add(addToMetricsList);
+        addToMetricsList="MAX_FREQ_WORD = " + mostFreqWordUsed;
+        resultMetrics.add(addToMetricsList);
+        addToMetricsList="LONGEST_WORD = " + longestWord;
+        resultMetrics.add(addToMetricsList);
+    }
+    void writeToMetricsFile(String metricsFileName)
+    {
+        this.getMetrics();
+        this.stringToWriteinFile();
+        for(int i=0;i<resultMetrics.size();i++){
+            writeDatatoFile(metricsFileName,resultMetrics.get(i));
+        }
+    }
     void displayMetrics(){
         calculateMetrics.displaytoConsole();
-        System.out.println("inside results: "+ calculateMetrics.calculateAvgWordCount()+calculateMetrics.calculateAvgCharCount()+calculateMetrics.calcMostFreqWord());
+        System.out.println("inside results: "+ avgWordCountPerSentence+" "+avgCharCountPerSentence+" "+ mostFreqWordUsed+ " "+ longestWord);
     }
 
     String reverseWord(String data){

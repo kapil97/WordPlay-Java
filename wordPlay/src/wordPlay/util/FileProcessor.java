@@ -7,13 +7,16 @@ import java.lang.String;
 import java.io.FileNotFoundException;
 public class FileProcessor {
 
-    String inputFileName;
-
-
-    public FileProcessor(String filename){
-        inputFileName=filename;
+    String inputFileName,outputFileName,metricsFileName;
+    public void setInputFileName(String inputFile){
+        inputFileName=inputFile;
     }
-
+    public void setOutputFileName(String outputFile){
+        outputFileName=outputFile;
+    }
+    public void setMetricsFileName(String metricsFile){
+        metricsFileName=metricsFile;
+    }
     private boolean validation(String sentence) {        //Referred from https://www.tutorialspoint.com/how-to-find-if-a-given-string-contains-only-letters-in-java
         sentence = sentence.toLowerCase();
         int valid=0;
@@ -38,13 +41,13 @@ public class FileProcessor {
             while (sc.hasNextLine()) {
                 String data = sc.nextLine();
                 if (validation(data)) {
-                    reversedSentence = results.reverseStringsOfSentence(data);
-                    fileDisplayInterface.writeDatatoFile("output.txt", reversedSentence);
+                    reversedSentence = results.sentenceProcessor(data);
+                    fileDisplayInterface.writeDatatoFile(outputFileName, reversedSentence);
                 } else
                     System.out.println("ERROR: Input File with Invalid Characters, Only Aa-Zz 0-9 white spaces and periods");
             }
+            results.writeToMetricsFile(metricsFileName);
             results.displayMetrics();
-            //results.writeMetricsToFile();
         }
        catch (FileNotFoundException e){
             System.out.println("in catch, error:"+inputFileName);
@@ -52,5 +55,4 @@ public class FileProcessor {
        }
 
     }
-
 }

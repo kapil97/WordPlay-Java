@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import wordPlay.util.Results;
 import java.lang.Math;
 import java.util.HashMap;
+import java.lang.String;
 import java.util.Map;
 
 public class CalculateMetrics{
@@ -11,9 +12,10 @@ public class CalculateMetrics{
     static ArrayList<Integer> wordCountPerSentence=new ArrayList<Integer>();
     static ArrayList<Integer> charPerSentence=new ArrayList<Integer>();
     HashMap<String, Integer> wordWithCount = new HashMap<String, Integer>();
-     String mostFreqWord;
-     double averageWordCount,averageCharCount;
-   // Results results=new Results();
+    String mostFreqWord;
+    String longestWord;
+    static int longestWordLength=0;
+    double averageWordCount,averageCharCount;
     int mostFreqWordvalue = 0;
 
     void addtoArraylist(int numberOfWords){
@@ -35,10 +37,8 @@ public class CalculateMetrics{
             count++;
         }
         avg=sum/count;
-        //System.out.println("Average Character per Word : "+ avg);
         avg=Math.floor(avg * 100) / 100;
         averageCharCount=avg;
-        //results.setAvgCharCount(averageCharCount);
         return avg;
     }
     double calculateAvgWordCount(){
@@ -48,13 +48,10 @@ public class CalculateMetrics{
             sum+=wordCountPerSentence.get(i);
             count++;
         }
-        //System.out.println("sum :"+ sum);
-        //System.out.println("count:"+ count);
         avg=sum/count;
-        //System.out.println("average:"+ avg);
         avg=Math.floor(avg * 100) / 100;
         averageWordCount=avg;
-       // results.setAvgWordCount(averageWordCount);
+
         return avg;
     }
     void createWordMap(String word){
@@ -71,13 +68,26 @@ public class CalculateMetrics{
                 mostFreqWordvalue=(int)mapElement.getValue();
             }
         }
-        //results.setMostFreqWord(mostFreqWord);
         return mostFreqWord;
+    }
+
+    void longestWord(String word){
+        if(word.contains(".")){
+            word= word.replace(".","");
+            if(longestWordLength<word.length()) {
+                longestWordLength = word.length();
+                longestWord=word;
+            }
+        }
+
+    }
+    String getLongestWord(){
+        return longestWord;
     }
     void displaytoConsole(){
         System.out.println("AVG_NUMBER_WORDS_PER_SENTENCE = "+ calculateAvgWordCount());
         System.out.println("AVG_NUM_CHARS_PER_SENTENCE = "+ calculateAvgCharCount());
         System.out.println("Most Frequent Word Used = "+calcMostFreqWord());
-        //System.out.println("Whole line:"+allStrings);
+        System.out.println("Longest Word: "+longestWord);
     }
 }
