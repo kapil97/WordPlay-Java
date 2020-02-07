@@ -4,10 +4,15 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 /**
- * @author John Doe
+ * @author Kamleshwar Ragava
  *
  */
 public class Driver {
+	/**
+	 *
+	 * @param args
+	 * @return null
+	 */
 	public static void main(String[] args) {
 
 		/*
@@ -20,14 +25,20 @@ public class Driver {
 			System.err.println("Error: Incorrect number of arguments. Program accepts 3 arguments.");
 			System.exit(0);
 		}
-			File inputFile = new File(args[0]);
-			String inputFileName=inputFile.getName();
-			String resultFileName=args[1];
-			String metricsFileName=args[2];
-			FileProcessor fileProcessor=new FileProcessor();
+		/*
+		Creating object of FileProcessor class
+		 */
+		FileProcessor fileProcessor=new FileProcessor();
+		/*
+		Passing the arguments to FileProcessor
+		 */
 			fileProcessor.setInputFileName(args[0]);
 			fileProcessor.setOutputFileName(args[1]);
 			fileProcessor.setMetricsFileName(args[2]);
+		/*
+		Initiating the Process of Input File
+		 */
+
 			fileProcessor.processInputFile();
 	}
 }

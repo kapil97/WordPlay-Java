@@ -8,7 +8,9 @@ import java.lang.String;
 import java.util.Map;
 
 public class CalculateMetrics{
-
+    /*
+    Local Variable Declaration.
+     */
     static ArrayList<Integer> wordCountPerSentence=new ArrayList<Integer>();
     static ArrayList<Integer> charPerSentence=new ArrayList<Integer>();
     HashMap<String, Integer> wordWithCount = new HashMap<String, Integer>();
@@ -18,9 +20,20 @@ public class CalculateMetrics{
     double averageWordCount,averageCharCount;
     int mostFreqWordvalue = 0;
 
+    /**
+     *
+     * @param numberOfWords
+     * @return null
+     */
     void addtoArraylist(int numberOfWords){
         wordCountPerSentence.add(numberOfWords);
     }
+
+    /**
+     *
+     * @param line
+     * @return null
+     */
     void calculateCharacters(String line){
     int sum=0;
     char[] lineArray=line.toCharArray();
@@ -29,6 +42,11 @@ public class CalculateMetrics{
     }
     charPerSentence.add(sum);
     }
+
+    /**
+     * @param null
+     * @return Average Character Count
+     */
     double calculateAvgCharCount(){
         double sum=0,count=0;
         double avg=0;
@@ -41,6 +59,11 @@ public class CalculateMetrics{
         averageCharCount=avg;
         return avg;
     }
+
+    /**
+     * @param null
+     * @return Average Word Count
+     */
     double calculateAvgWordCount(){
         double sum=0,count=0;
         double avg=0.00;
@@ -54,6 +77,12 @@ public class CalculateMetrics{
 
         return avg;
     }
+
+    /**
+     *
+     * @param word
+     * @return null
+     */
     void createWordMap(String word){
         if(wordWithCount.containsKey(word)){
             wordWithCount.put(word,wordWithCount.get(word)+1);
@@ -61,6 +90,12 @@ public class CalculateMetrics{
         else
             wordWithCount.put(word,1);
     }
+
+    /**
+     *
+     * @param null
+     * @return Maximum Frequently Used Word
+     */
     String calcMostFreqWord(){
         for (Map.Entry mapElement : wordWithCount.entrySet()) {
             if((int)mapElement.getValue()>mostFreqWordvalue){
@@ -70,7 +105,15 @@ public class CalculateMetrics{
         }
         return mostFreqWord;
     }
+    /*
+    Calculate Longest Word
+     */
 
+    /**
+     *
+     * @param word
+     * @return null
+     */
     void longestWord(String word){
         if(word.contains(".")){
             word= word.replace(".","");
@@ -81,13 +124,26 @@ public class CalculateMetrics{
         }
 
     }
+
+    /**
+     *
+     * @param null
+     * @return Longest Word
+     */
     String getLongestWord(){
         return longestWord;
     }
+
+    /**
+     *
+     * @param null
+     * @return null
+     */
     void displaytoConsole(){
         System.out.println("AVG_NUMBER_WORDS_PER_SENTENCE = "+ calculateAvgWordCount());
         System.out.println("AVG_NUM_CHARS_PER_SENTENCE = "+ calculateAvgCharCount());
         System.out.println("Most Frequent Word Used = "+calcMostFreqWord());
         System.out.println("Longest Word: "+longestWord);
     }
+
 }

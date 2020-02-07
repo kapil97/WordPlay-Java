@@ -6,13 +6,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.io.FileWriter;
 public class Results implements FileDisplayInterface, StdoutDisplayInterface {
+    /*
+    Local variable declarations
+     */
     double avgWordCountPerSentence;
     double avgCharCountPerSentence;
     String mostFreqWordUsed;
     ArrayList<String> resultMetrics=new ArrayList<String>();
     String longestWord;
+    /*
+    Object Creation of Metrics
+     */
     CalculateMetrics calculateMetrics=new CalculateMetrics();
-
+    /**
+     *
+     * @param data
+     * @return Reversed String
+     */
     String sentenceProcessor(String data){
         calculateMetrics.calculateCharacters(data);
         String[] words=data.split(" ");
@@ -25,15 +35,23 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
             revWords[i]=reverseWord(words[i]);
             reverseString+=" "+revWords[i];
         }
-        System.out.println(reverseString);
+        printToConsole(reverseString);
         return reverseString;
     }
+    /**
+     * @param null
+     * @return null
+     */
     void getMetrics(){
         avgCharCountPerSentence=calculateMetrics.calculateAvgCharCount();
         avgWordCountPerSentence=calculateMetrics.calculateAvgWordCount();
         mostFreqWordUsed=calculateMetrics.calcMostFreqWord();
         longestWord=calculateMetrics.getLongestWord();
     }
+    /**
+     * @param null
+     * @return null
+     */
     void stringToWriteinFile(){
         String addToMetricsList="AVG_NUMBER_WORDS_PER_SENTENCE = "+ avgWordCountPerSentence;
         resultMetrics.add(addToMetricsList);
@@ -44,6 +62,11 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
         addToMetricsList="LONGEST_WORD = " + longestWord;
         resultMetrics.add(addToMetricsList);
     }
+    /**
+     *
+     * @param metricsFileName
+     * @return null
+     */
     void writeToMetricsFile(String metricsFileName)
     {
         this.getMetrics();
@@ -52,11 +75,18 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
             writeDatatoFile(metricsFileName,resultMetrics.get(i));
         }
     }
-    void displayMetrics(){
+    /**
+     * @param null
+     * @return null
+     */
+    public void displayMetrics(){
         calculateMetrics.displaytoConsole();
-        System.out.println("inside results: "+ avgWordCountPerSentence+" "+avgCharCountPerSentence+" "+ mostFreqWordUsed+ " "+ longestWord);
     }
-
+    /**
+     *
+     * @param data
+     * @return reversed string in local class
+     */
     String reverseWord(String data){
 	    StringBuilder sb=new StringBuilder();
 	    int period=0;
@@ -73,7 +103,20 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
         }
         return sb.toString();
     }
-
+    /**
+     *
+     * @param data
+     * @return null
+     */
+    public void printToConsole(String data){
+        System.out.println(data);
+    }
+    /**
+     *
+     * @param filename
+     * @param Line
+     * @retrun null
+     */
     public void writeDatatoFile(String filename, String Line){
 	    try {
 	        File resultFile=new File(filename);
@@ -93,7 +136,4 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
 	       System.out.println("Error occured");
         }
     }
-
-
-
 }
